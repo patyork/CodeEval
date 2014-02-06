@@ -4,8 +4,8 @@ import sys
 NEGATIVE = 'negative'
 
 translations = dict(zero=0, one=1, two=2, three=3, four=4, five=5, six=6, seven=7, eight=8, nine=9,
-    ten=10, eleven=11, twelve=12, thirteen=13, fouteen=14, fifteen=15, sixteen=16, seventeen=17, eighteen=18, nineteen=19,
-	twenty=20, thirty=30, fourty=40, fifty=50, sixty=60, seventy=70, eighty=80, ninety=90)
+    ten=10, eleven=11, twelve=12, thirteen=13, fourteen=14, fifteen=15, sixteen=16, seventeen=17, eighteen=18, nineteen=19,
+	twenty=20, thirty=30, forty=40, fifty=50, sixty=60, seventy=70, eighty=80, ninety=90)
 	
 multipliers = dict(hundred=100, thousand=1000, million=1000000)
 	
@@ -44,6 +44,12 @@ def translate(line):
 			        i = j # will move the parent loop past the multiplier
 			        #j = len(words)  #break out
 			        break
+		elif i+2<len(words) and multipliers.get(words[i+2], -1) != -1:	#if the next is not a multiplier, but there is a next and the one after is amultiplier
+			tmp += translations.get(words[i+1], 0)
+			tmp *= multipliers[words[i+2]]
+			i += 2
+					
+			
 			
 		output += tmp								#add what we have to the running total
 		i += 1
@@ -55,3 +61,24 @@ def translate(line):
 with open(sys.argv[1], 'r') as f:
 	for line in f:
 		print translate(line)
+
+
+#with open(sys.argv[1], 'r') as f:
+#	wrongCount = 0
+#	for line in f:
+#		tests = line.strip().split('|')
+#		if str(translate(tests[0])) != tests[1]:
+#			print '%s translated to %i, should have been %s' % (tests[0], translate(tests[0]), tests[1])
+#			wrongCount += 1
+#	
+#	print '\n\nWrong Count: %i' % wrongCount
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
